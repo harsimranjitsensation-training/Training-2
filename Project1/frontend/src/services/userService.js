@@ -28,3 +28,21 @@ export const getAllUsers = async () => {
     throw error;
   }
 };
+
+export const deleteUser = async (id) => {
+  try {
+    return await axios.delete(`http://localhost:5000/users/${id}`);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const editUser = async (id, userData) => {
+  try {
+    return await axios.put(`http://localhost:5000/users/${id}` , userData);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

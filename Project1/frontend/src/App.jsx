@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import EditForm from "./pages/EditForm";
 
 function App() {
   const route = createBrowserRouter([
@@ -36,6 +37,10 @@ function App() {
         {
           path: "/signup",
           element: <Signup />,
+        },
+         {
+          path: "/edit/:id",
+          element: <EditForm />,
         },
       ],
     },
