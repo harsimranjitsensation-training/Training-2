@@ -1,17 +1,11 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAllUsers } from "../services/userService";
+import { getAllUsers , editUser } from "../services/userService";
 
 function EditForm() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    age: 0,
-    password: "",
-  });
   const [user, setUser] = useState("");
 
   async function fetchUser() {
@@ -25,9 +19,8 @@ function EditForm() {
   }
 
   function handleChange(e) {
-    e.preventDefault();
-    setFormData({
-      ...formData,
+    setUser({
+      ...user,
       [e.target.name]: e.target.value,
     });
   }
@@ -36,11 +29,11 @@ function EditForm() {
     e.preventDefault();
 
     try {
-      const res = await editUser(id, formData);
+      const res = await editUser(id, user);
       alert(res.data.message);
       navigate("/");
 
-      setFormData({
+      setUser({
         name: "",
         email: "",
         age: "",
