@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 const Header = () => {
+  const { user } = useAuth();
   return (
     <header>
       <div className="logo">Logo</div>
@@ -27,18 +29,22 @@ const Header = () => {
         </div>
       </nav>
 
-      <div className="auth">
-        <div>
-          <Link className="link" to="/signin">
-            signin
-          </Link>
-        </div>{" "}
-        <div>
-          <Link className="link" to="/signup">
-            signup
-          </Link>
+      {user ? (
+        <span>Welcome , {user.name}</span>
+      ) : (
+        <div className="auth">
+          <div>
+            <Link className="link" to="/signin">
+              signin
+            </Link>
+          </div>{" "}
+          <div>
+            <Link className="link" to="/signup">
+              signup
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 };

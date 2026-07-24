@@ -11,7 +11,7 @@ export const addUser = async (req, res) => {
       });
     }
     const new_user = await User.create(req.body);
-    if (user) {
+    if (new_user) {
       res.status(200).json({
         message: "User added",
         user: new_user,
@@ -47,6 +47,7 @@ export const loginUser = async (req, res) => {
     if (user) {
       res.status(200).json({
         message: "User login sucessful",
+        user: user,
       });
     } else {
       res.status(404).json({

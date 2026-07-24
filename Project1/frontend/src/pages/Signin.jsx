@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { loginUser } from "../services/userService";
 import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "../context/AuthContext";
+
 const Signin = () => {
+  const { storeUser } = useAuth();
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -22,6 +26,7 @@ const Signin = () => {
 
     try {
       const res = await loginUser(formData);
+      storeUser(res.data.user);
       alert(res.data.message);
       navigate("/");
 
