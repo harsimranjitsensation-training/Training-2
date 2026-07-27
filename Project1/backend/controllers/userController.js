@@ -1,16 +1,24 @@
 import User from "../models/User.js";
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 export const addUser = async (req, res) => {
   try {
     const { name, email, age, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = await User.findOne({ email });
     if (user) {
       res.json({
         message: "User already exists",
       });
     }
-    const new_user = await User.create(req.body);
+    const new_user = await User.create({
+      name,
+      email,
+      age,
+      password: hashedPassword,
+    });
     if (new_user) {
       res.status(200).json({
         message: "User added",
@@ -42,9 +50,16 @@ export const getAllUsers = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        res.status(404).json({
+          message: "Password does not match",
+        });
+      }
+
       res.status(200).json({
         message: "User login sucessful",
         user: user,
@@ -58,6 +73,7 @@ export const loginUser = async (req, res) => {
     res.status(500).json({
       error: error,
     });
+    throw error;
   }
 };
 
@@ -87,8 +103,7 @@ export const editUser = async (req, res) => {
     const { id } = req.params;
     const { name, email, age, password } = req.body;
 
-    const user = await User.findByIdAndUpdate(id, req.body, 
-      { new: true });
+    const user = await User.findByIdAndUpdate(id, req.body, { new: true });
     if (user) {
       res.status(200).json({
         message: "User updated",
