@@ -1,4 +1,4 @@
-import { addUser, deleteUser, editUser, getAllUsers, loginUser } from "../controllers/userController.js";
+import { addUser, deleteUser, editUser, getAllUsers, loginUser, logout } from "../controllers/userController.js";
 import { Router } from "express";
 import express from 'express';
 
@@ -9,5 +9,6 @@ router.get("/", getAllUsers);
 router.post("/login", loginUser);
 router.delete("/:id", deleteUser);
 router.put("/:id", editUser);
+router.post("/logout", logout);
 
 export default router;

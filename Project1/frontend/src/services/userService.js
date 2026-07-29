@@ -46,3 +46,13 @@ export const editUser = async (id, userData) => {
     throw error;
   }
 };
+
+export const logoutUser = async (userData) => {
+  try {
+    return await axios.post("http://localhost:5000/users/logout", userData);
+    console.log(userData);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

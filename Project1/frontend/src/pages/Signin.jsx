@@ -27,8 +27,9 @@ const Signin = () => {
     try {
       const res = await loginUser(formData);
       storeUser(res.data.user);
+      localStorage.setItem("token", res.data.token);
       alert(res.data.message);
-      navigate("/");
+      navigate("/home");
 
       setFormData({
         email: "",

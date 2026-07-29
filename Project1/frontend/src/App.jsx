@@ -15,7 +15,7 @@ function App() {
       element: <Layout />,
       children: [
         {
-          path: "/",
+          path: "/home",
           element: <Home />,
         },
         {
@@ -31,7 +31,7 @@ function App() {
           element: <Contact />,
         },
         {
-          path: "/signin",
+          path: "/",
           element: <Signin />,
         },
         {

@@ -25,7 +25,7 @@ const Signup = () => {
     try {
       const res = await addUser(formData);
       alert(res.data.message);
-      navigate("/signin");
+      navigate("/");
       
       setFormData({
         name: "",

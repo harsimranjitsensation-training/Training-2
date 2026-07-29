@@ -1,15 +1,31 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { logoutUser } from "../services/userService";
 const Header = () => {
-  const { user } = useAuth();
-  
+  const { user , setUser} = useAuth();
+
+  async function logout(){
+    try {
+      await logoutUser();
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      setUser(null);
+      window.location.href = "/";
+      
+    }
+    catch(error){
+      console.log(error);
+      throw error;
+    }
+  }
+
   return (
     <header>
       <div className="logo">Logo</div>
       <nav>
         <div>
-          <Link className="link" to="/">
+          <Link className="link" to="/home">
             Home
           </Link>
         </div>
@@ -31,11 +47,13 @@ const Header = () => {
       </nav>
 
       {user ? (
-        <span>Welcome , {user.name}</span>
+        <span>
+          Welcome , {user.name} <button onClick={logout}>Logout</button>
+        </span>
       ) : (
         <div className="auth">
           <div>
-            <Link className="link" to="/signin">
+            <Link className="link" to="/">
               signin
             </Link>
           </div>{" "}
